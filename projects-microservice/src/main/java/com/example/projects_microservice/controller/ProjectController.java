@@ -3,13 +3,14 @@ package com.example.projects_microservice.controller;
 import com.example.projects_microservice.entity.Project;
 import com.example.projects_microservice.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/proyectos")
+@RequestMapping("/api/v1/projects")
 public class ProjectController {
 
     @Autowired
@@ -31,8 +32,13 @@ public class ProjectController {
 
     // Crear un nuevo proyecto
     @PostMapping
-    public Project createProject(@RequestBody Project project) {
-        return projectService.createProject(project);
+    public ResponseEntity<?> createProject(@RequestBody Project project) {
+        try {
+            Project newProject = projectService.createProject(project);
+            return ResponseEntity.ok(newProject);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error al crear un proyecto: " + e.getMessage());
+        }
     }
 
     // Actualizar un proyecto existente
@@ -48,17 +54,17 @@ public class ProjectController {
 
     // Eliminar un proyecto (lógica de eliminación)
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProject(@PathVariable Long id) {
+    public ResponseEntity<String> deleteProject(@PathVariable Long id) {
         try {
             projectService.deleteProject(id);
-            return ResponseEntity.noContent().build();
+            return ResponseEntity.status(HttpStatus.OK).body("Proyecto eliminado" );
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     // Actualizar el estado de un proyecto
-    @PatchMapping("/{id}/estado")
+    @PatchMapping("/{id}/state")
     public ResponseEntity<Project> updateProjectStatus(@PathVariable Long id, @RequestBody String estado) {
         try {
             Project project = projectService.getProjectById(id).orElseThrow();

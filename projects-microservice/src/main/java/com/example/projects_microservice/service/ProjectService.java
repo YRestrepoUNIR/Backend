@@ -30,11 +30,21 @@ public class ProjectService {
         Optional<Project> optionalProject = projectRepository.findById(id);
         if (optionalProject.isPresent()) {
             Project existingProject = optionalProject.get();
-            existingProject.setNombre(projectDetails.getNombre());
-            existingProject.setDescripcion(projectDetails.getDescripcion());
-            existingProject.setFechaInicio(projectDetails.getFechaInicio());
-            existingProject.setFechaFin(projectDetails.getFechaFin());
-            existingProject.setEstado(projectDetails.getEstado());
+            if(projectDetails.getNombre() != null){
+                existingProject.setNombre(projectDetails.getNombre());
+            }
+            if(projectDetails.getDescripcion() != null){
+                existingProject.setDescripcion(projectDetails.getDescripcion());
+            }
+            if(projectDetails.getFechaInicio() != null){
+                existingProject.setFechaInicio(projectDetails.getFechaInicio());
+            }
+            if(projectDetails.getFechaFin() != null){
+                existingProject.setFechaFin(projectDetails.getFechaFin());
+            }
+            if(projectDetails.getEstado() != null){
+                existingProject.setEstado(projectDetails.getEstado());
+            }
             return projectRepository.save(existingProject);
         } else {
             throw new RuntimeException("Proyecto no encontrado con id: " + id);

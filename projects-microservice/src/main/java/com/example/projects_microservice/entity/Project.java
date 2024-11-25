@@ -1,7 +1,7 @@
 package com.example.projects_microservice.entity;
 
 import jakarta.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "proyectos")
@@ -17,11 +17,11 @@ public class Project {
     @Column(length = 1000)
     private String description;
 
-    @Temporal(TemporalType.DATE)
-    private Date startDate;
+    @Column(name = "start_date")
+    private LocalDateTime startDate;
 
-    @Temporal(TemporalType.DATE)
-    private Date endDate;
+    @Column(name = "end_date")
+    private LocalDateTime endDate;
 
     @Column(nullable = false)
     private String state;
@@ -30,7 +30,7 @@ public class Project {
     public Project() {}
 
     // Constructor con parámetros
-    public Project(String nombre, String descripcion, Date fechaInicio, Date fechaFin, String estado) {
+    public Project(String nombre, String descripcion, LocalDateTime fechaInicio, LocalDateTime fechaFin, String estado) {
         this.name = nombre;
         this.description = descripcion;
         this.startDate = fechaInicio;
@@ -63,19 +63,19 @@ public class Project {
         this.description = descripcion;
     }
 
-    public Date getFechaInicio() {
+    public LocalDateTime getFechaInicio() {
         return startDate;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(LocalDateTime fechaInicio) {
         this.startDate = fechaInicio;
     }
 
-    public Date getFechaFin() {
+    public LocalDateTime getFechaFin() {
         return endDate;
     }
 
-    public void setFechaFin(Date fechaFin) {
+    public void setFechaFin(LocalDateTime fechaFin) {
         this.endDate = fechaFin;
     }
 
