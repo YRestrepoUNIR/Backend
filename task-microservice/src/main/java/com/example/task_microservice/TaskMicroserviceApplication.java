@@ -1,13 +1,13 @@
-package com.example.backend;
+package com.example.task_microservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BackendProjectApplication {
+public class TaskMicroserviceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BackendProjectApplication.class, args);
+		SpringApplication.run(TaskMicroserviceApplication.class, args);
 	}
 
 }
